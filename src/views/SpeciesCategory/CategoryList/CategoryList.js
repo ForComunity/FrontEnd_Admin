@@ -29,9 +29,9 @@ class CategoryList extends Component {
     });
   };
   categoryHandle = (category) => {
-    if (category === 15) {
+    if (category === 3) {
       return ("Nông sản");
-    } else if (category === 16) {
+    } else if (category === 4) {
       return ("Động vật");
     }
   };
@@ -57,6 +57,18 @@ class CategoryList extends Component {
     } else if (status === 0) {
       return ("ghost-danger");
     }
+  };
+  changeStatus = (event, speciesCategory) => {
+    var url = '/api/speciesCategory/changeStatus/' + speciesCategory.id;
+    axios.post(url
+    ).then(this.loadSpeciesCategoryList()
+    );
+  };
+  changeActive = (event, speciesCategory) => {
+    var url = '/api/speciesCategory/changeHot/' + speciesCategory.id;
+    axios.post(url
+    ).then(this.loadSpeciesCategoryList()
+    );
   };
 
   render() {
@@ -109,11 +121,13 @@ class CategoryList extends Component {
                         <td>{this.categoryHandle(speciesCategory.cat_id)}</td>
                         <td>{speciesCategory.name}</td>
                         <td>{speciesCategory.slug}</td>
-                        <td><Button size="sm"
-                                    color={this.changeColor(speciesCategory.active)}> {speciesCategory.active === 1 ? "Public" : "private"}</Button>
+                        <td>
+                          <span onClick={event => this.changeStatus(event, speciesCategory)}><Button size="sm"
+                                                                                             color={this.changeColor(speciesCategory.status)}> {speciesCategory.status === 1 ? "Ổn định" : "Khẩn cấp"}</Button></span>
                         </td>
-                        <td><Button size="sm"
-                                    color={this.changeColor(speciesCategory.status)}> {speciesCategory.status === 1 ? "Public" : "private"}</Button>
+                        <td>
+                          <span onClick={event => this.changeActive(event, speciesCategory)}><Button size="sm"
+                                                                                          color={this.changeColor(speciesCategory.active)}> {speciesCategory.active === 1 ? "Public" : "private"}</Button></span>
                         </td>
                         <td>{speciesCategory.created_at =now.format("YYYY-MM-DD")}</td>
                         <td>{speciesCategory.updated_at =now.format("YYYY-MM-DD")}</td>

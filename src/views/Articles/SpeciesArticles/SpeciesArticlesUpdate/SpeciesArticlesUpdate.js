@@ -239,6 +239,7 @@ class SpeciesArticlesUpdate extends Component {
                       </Col>
                       <Col xs="12" md="9">
                         <Input type="file" id="as_images1" accept="image/png, image/jpeg, image/jpeg"  name="as_images1"
+                               value={articleSpecies.image1}
                                onChange={this.handleImageChange1}
                         />
                       </Col>
@@ -249,6 +250,7 @@ class SpeciesArticlesUpdate extends Component {
                       </Col>
                       <Col xs="12" md="9">
                         <Input type="file" id="as_images2" accept="image/png, image/jpeg, image/jpeg"  name="as_images2"
+                               value={articleSpecies.image2}
                                onChange={this.handleImageChange2}
                         />
                       </Col>
@@ -259,6 +261,7 @@ class SpeciesArticlesUpdate extends Component {
                       </Col>
                       <Col xs="12" md="9">
                         <Input type="file" id="as_images3" accept="image/png, image/jpeg, image/jpeg"  name="as_images3"
+                               value={articleSpecies.image3}
                                onChange={this.handleImageChange3}
                         />
                       </Col>

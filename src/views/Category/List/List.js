@@ -51,6 +51,12 @@ class List extends Component {
       return ("ghost-danger");
     }
   };
+  changeStatus = (event, category) => {
+    var url = '/api/category/changeStatus/' + category.id;
+    axios.post(url
+    ).then(this.loadCategoryList()
+    );
+  };
 
   render() {
     let {categories, isLoaded} = this.state;
@@ -102,8 +108,9 @@ class List extends Component {
                         <td>{category.slug}</td>
                         <td><img src={pare_url_file(category.avatar)} alt="" className={"img-avatar mr-3"}
                                  width={50 + 'px'}/></td>
-                        <td><Button size="sm"
-                                    color={this.changeColor(category.status)}> {category.status === 1 ? "Public" : "private"}</Button>
+                        <td>
+                          <span onClick={event => this.changeStatus(event, category)}><Button size="sm"
+                                                                                                     color={this.changeColor(category.status)}> {category.status === 1 ? "public" : "private"}</Button></span>
                         </td>
                         <td>{category.created_at =now.format("YYYY-MM-DD")}</td>
                         <td>{category.updated_at =now.format("YYYY-MM-DD")}</td>

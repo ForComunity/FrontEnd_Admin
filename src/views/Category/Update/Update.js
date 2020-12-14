@@ -28,31 +28,31 @@ class Update extends Component {
         avatar: null,
       },
 
-      items: [],
+      // items: [],
       isLoaded: false,
       files: null
 
     }
   }
 
-  loadCategoryList = () => {
-    fetch('http://127.0.0.1:8000/api/category', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    }).then(res => res.json()).then(json => {
-      this.setState({
-        isLoaded: true,
-        items: json,
-      })
-    });
-  };
+  // loadCategoryList = () => {
+  //   fetch('http://127.0.0.1:8000/api/category', {
+  //     method: 'get',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //     }
+  //   }).then(res => res.json()).then(json => {
+  //     this.setState({
+  //       isLoaded: true,
+  //       items: json,
+  //     })
+  //   });
+  // };
 
   componentDidMount() {
     this.loadCategoryInfor();
-    this.loadCategoryList();
+    // this.loadCategoryList();
 
   }
 
@@ -89,7 +89,7 @@ class Update extends Component {
       .catch(err => console.log(err));
     let form_data = new FormData();
     form_data.append('avatar', this.state.files, this.state.files.name);
-    let url = 'http://127.0.0.1:8000/api/uploadFileSave';
+    let url = 'http://127.0.0.1:8000/api/uploadFileCategory';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -159,7 +159,7 @@ class Update extends Component {
                           onClick={this.onHandleSubmit}>
                     <i className="fa fa-dot-circle-o"> </i> Chỉnh sửa
                   </Button>
-                  <Link to={"/save"}>
+                  <Link to={"/category"}>
                     <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"> </i> Hủy bỏ</Button>
                   </Link>
                 </CardFooter>

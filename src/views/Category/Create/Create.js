@@ -33,24 +33,6 @@ class Create extends Component {
     }
   }
 
-  loadCategoryList = () => {
-    fetch('http://127.0.0.1:8000/api/category', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    }).then(res => res.json()).then(json => {
-      this.setState({
-        isLoaded: true,
-        items: json,
-      })
-    });
-  };
-
-  componentDidMount() {
-    this.loadCategoryList();
-  }
 
   onHandleChange = (e) => {
     this.setState({
@@ -84,57 +66,52 @@ class Create extends Component {
   };
 
   render() {
-    let {items, isLoaded} = this.state;
-    if (!isLoaded) {
-      return <div>Loading...</div>
-    } else {
-      return (
-        <div className="animated fadeIn">
-          <Row>
-            <Col xs="6">
-              <Card>
-                <CardHeader>
-                  <strong>{this.state.feature_name}</strong>
-                </CardHeader>
-                <CardBody>
-                  <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="name">Tên Danh mục</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input placeholder="fa fa-home" id="name" name="name"
-                               value={this.state.name}
-                               onChange={this.onHandleChange}/>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="spe_images3">Avatar</Label>
-                      </Col>
-                      <Col xs="12" md="9">
-                        <Input type="file" id="avatar" accept="image/png, image/jpeg, image/jpeg"
-                               name="avatar"
-                               onChange={this.handleAvatarChange}/>
-                      </Col>
-                    </FormGroup>
-                  </Form>
-                </CardBody>
-                <CardFooter>
-                  <Button className="mr-3" type="submit" size="sm" color="primary"
-                          onClick={this.onHandleSubmit}>
-                    <i className="fa fa-dot-circle-o"> </i> Thêm mới
-                  </Button>
-                  <Link to={"/category"}>
-                    <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"> </i> Hủy bỏ</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      );
-    }
+    return (
+      <div className="animated fadeIn">
+        <Row>
+          <Col xs="6">
+            <Card>
+              <CardHeader>
+                <strong>{this.state.feature_name}</strong>
+              </CardHeader>
+              <CardBody>
+                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="name">Tên Danh mục</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input placeholder="fa fa-home" id="name" name="name"
+                             value={this.state.name}
+                             onChange={this.onHandleChange}/>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="spe_images3">Avatar</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="file" id="avatar" accept="image/png, image/jpeg, image/jpeg"
+                             name="avatar"
+                             onChange={this.handleAvatarChange}/>
+                    </Col>
+                  </FormGroup>
+                </Form>
+              </CardBody>
+              <CardFooter>
+                <Button className="mr-3" type="submit" size="sm" color="primary"
+                        onClick={this.onHandleSubmit}>
+                  <i className="fa fa-dot-circle-o"> </i> Thêm mới
+                </Button>
+                <Link to={"/category"}>
+                  <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"> </i> Hủy bỏ</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    );
   }
 }
 
