@@ -11,6 +11,7 @@ class RescueList extends Component {
     this.state = {
       isLoaded: false,
       rescues: [],
+      spercies:[]
     }
   }
 
@@ -31,6 +32,12 @@ class RescueList extends Component {
 
   componentDidMount() {
     this.loadRescueList();
+    axios.get('/api/species').then(res=>{
+      this.setState({
+        species:res.data,
+        isLoaded: true,
+      })
+    })
   }
 
 
@@ -51,7 +58,12 @@ class RescueList extends Component {
       return ("ghost-danger");
     }
   };
-
+  showse=(id)=>{
+    let data1=this.state.species.find(value=>value.id ===id)
+    return(
+      <td>{data1.name}</td>
+    )
+  }
   render() {
     let {rescues, isLoaded} = this.state;
     var now=dayjs();
@@ -86,7 +98,7 @@ class RescueList extends Component {
                       <th scope="col">Địa chỉ</th>
                       <th scope="col">Nghề nghiệp</th>
                       <th scope="col">Tin nhắn</th>
-                      <th scope="col">Chủng loại</th>
+                      <th scope="col">Tên</th>
                       <th scope="col">Ngày tạo</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -101,7 +113,7 @@ class RescueList extends Component {
                         <td>{rescue.address}</td>
                         <td>{rescue.job}</td>
                         <td>{rescue.message}</td>
-                        <td>{rescue.species_id}</td>
+                        {this.showse(rescue.species_id)}
                         <td>{rescue.created_at =now.format("YYYY-MM-DD")}</td>
                         <td>
                           <span onClick={event => this.deleteRescue(event, rescue)}

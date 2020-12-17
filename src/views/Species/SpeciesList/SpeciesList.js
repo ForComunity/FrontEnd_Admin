@@ -16,6 +16,7 @@ class SpeciesList extends Component {
       limit: 15,
       totalPage: 0,
       users: [],
+      speciesCategories:[]
     }
   }
 
@@ -30,6 +31,18 @@ class SpeciesList extends Component {
       this.setState({
         isLoaded: true,
         items: json,
+      })
+    });
+    fetch('http://127.0.0.1:8000/api/speciesCategory', {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    }).then(res => res.json()).then(json => {
+      this.setState({
+        isLoaded: true,
+        speciesCategories: json,
       })
     });
   };
@@ -76,17 +89,43 @@ class SpeciesList extends Component {
     );
   };
   changeColor = (status) => {
-    if (status === 1) {
+    if (status === 0) {
       return ("ghost-primary");
-    } else if (status === 0) {
+    } else if (status === 1) {
       return ("ghost-danger");
     }
   };
+  changeActive = (event, category) => {
+    var url = '/api/species/changeActive/' + category.id;
+    axios.post(url
+    ).then(this.loadSpeciesList()
+    );
+  };
 
+  show=(id)=>{
+    let index=this.state.speciesCategories.findIndex(value=>value.id===id)
 
+    let data1=this.state.speciesCategories
+    data1= Object(data1)
+
+    let data=this.state.speciesCategories.find(value=>value.id===id)
+    // console.log(index,data,data1[index].name)
+
+    if (data1[index]!==undefined) {
+      // console.log(data1[index].name , typeof (data1[index]))
+      return(
+        <td>{data1[index].name}</td>
+      )
+    } else {
+      return(
+        <td></td>
+      )
+    }
+  }
   render() {
     var now = dayjs();
-    let {items, isLoaded} = this.state;
+    let {items,speciesCategories, isLoaded} = this.state;
+    // console.log(speciesCategories)
     if (!isLoaded) {
       return <div>Loading...</div>
     } else {
@@ -113,9 +152,9 @@ class SpeciesList extends Component {
                       <th scope="col">Tên</th>
                       <th scope="col">Phân loại</th>
                       <th scope="col">Trạng thái</th>
+                      <th scope="col">Tình trạng</th>
                       <th scope="col">Mô tả</th>
                       <th scope="col">Hình ảnh</th>
-                      <th scope="col">Người tạo</th>
                       <th scope="col">Thao tác</th>
                     </tr>
                     </thead>
@@ -124,10 +163,15 @@ class SpeciesList extends Component {
                       return <tr key={index}>
                         <td>{species.id}</td>
                         <td>{species.name}</td>
-                        <td>{species.spe_cat_id}</td>
+                        {/*<td>{species.spe_cat_id}</td>*/}
+                        {this.show(species.spe_cat_id)}
                         <td>
                           <span onClick={event => this.changeStatus(event, species)}><Button size="sm"
                                                                                              color={this.changeColor(species.status)}> {species.status === 1 ? "Public" : "private"}</Button></span>
+                        </td>
+                        <td>
+                          <span onClick={event => this.changeActive(event, species)}><Button size="sm"
+                                                                                             color={this.changeColor(species.active)}> {species.active === 1 ? "Khẩn cấp" : "Ổn định"}</Button></span>
                         </td>
                         <td>{species.description_seo}</td>
                         <td>
@@ -138,7 +182,6 @@ class SpeciesList extends Component {
                           <img src={pare_url_file(species.image3)} alt="" className={"img-avatar mr-3"}
                                width={20 + 'px'}/>
                         </td>
-                        <td>{species.user_id}</td>
                         <td>
                           <Link to={"/Species/" + species.id} className={"edit-button"}><Button size="sm"
                                                                                              color="ghost-primary"><i

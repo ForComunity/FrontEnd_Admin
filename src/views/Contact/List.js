@@ -75,7 +75,6 @@ class List extends Component {
                       <th scope="col">#</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
-                      <th scope="col">Địa chỉ</th>
                       <th scope="col">Số điện thoại</th>
                       <th scope="col">Tin nhắn</th>
                       <th scope="col">Ngày tạo</th>
@@ -88,7 +87,6 @@ class List extends Component {
                         <td>{contact.id}</td>
                         <td>{contact.name}</td>
                         <td>{contact.email}</td>
-                        <td>{contact.address}</td>
                         <td>{contact.phone}</td>
                         <td>{contact.message}</td>
 

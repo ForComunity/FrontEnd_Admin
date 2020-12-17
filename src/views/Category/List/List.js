@@ -60,6 +60,7 @@ class List extends Component {
 
   render() {
     let {categories, isLoaded} = this.state;
+    console.log(categories)
     var now=dayjs();
     if (!isLoaded) {
       return <div>Loading...</div>

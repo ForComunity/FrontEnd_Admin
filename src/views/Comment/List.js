@@ -11,6 +11,8 @@ class List extends Component {
     this.state = {
       isLoaded: false,
       comments: [],
+      user:[],
+      species:[]
     }
   }
 
@@ -31,8 +33,31 @@ class List extends Component {
 
   componentDidMount() {
     this.loadCommentList();
+    axios.get('/api/user').then(res=>{
+      this.setState({
+        user:res.data,
+        isLoaded: true
+      })
+    })
+    axios.get('/api/species').then(res=>{
+      this.setState({
+        species:res.data,
+        isLoaded: true
+      })
+    })
   }
-
+showse=(id)=>{
+    let data1=this.state.species.find(value=>value.id ===id)
+    return(
+      <td>{data1.name}</td>
+    )
+}
+showuser=(id)=>{
+    let data1=this.state.user.find(value=>value.id ===id)
+    return(
+      <td>{data1.name}</td>
+    )
+  }
 
   deleteComment = (event, comment) => {
     if (!window.confirm("Xác nhận xóa danh mục\n [" + comment.name + "]")) {
@@ -98,8 +123,8 @@ class List extends Component {
                     {comments.map((comment, index) => {
                       return <tr key={index}>
                         <td>{comment.id}</td>
-                        <td>{comment.user_id}</td>
-                        <td>{comment.species_id}</td>
+                        {this.showuser(comment.user_id)}
+                        {this.showse(comment.species_id)}
                         <td>{comment.content}</td>
                         <td>
                           <span onClick={event => this.changeStatus(event, comment)}><Button size="sm"

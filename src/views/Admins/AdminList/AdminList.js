@@ -47,6 +47,7 @@ class AdminList extends Component {
 
   render() {
     let {admin, isLoaded} = this.state;
+    console.log(admin)
     if (!isLoaded) {
       return <div>Loading...</div>
     } else {

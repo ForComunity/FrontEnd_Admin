@@ -41,7 +41,7 @@ class Update extends Component {
 
   onHandleChange = (event) => {
     this.setState({
-      category: {...this.state.category, [event.target.id]: event.target.value},
+      org_categories: {...this.state.org_categories, [event.target.id]: event.target.value},
     });
   };
 
@@ -54,16 +54,16 @@ class Update extends Component {
   onHandleSubmit = (e) => {
     e.preventDefault();
     let id = this.props.match.params.id;
-    let category = JSON.parse(JSON.stringify(this.state.category));
-    category.avatar = create_name(this.state.files.name);
-    console.log(category.avatar);
+    let org_categories = JSON.parse(JSON.stringify(this.state.org_categories));
+    org_categories.avatar = create_name(this.state.files.name);
+    console.log(org_categories.avatar)
     axios({
       method: 'put',
       url: 'http://127.0.0.1:8000/api/organizationCategory/' + id,
-      data: category
+      data: org_categories
     })
       .then(res => {
-        this.setState({category}, () => {
+        this.setState({org_categories}, () => {
           notify.success('Chỉnh sửa thành công');
         });
         this.props.history.push('/organizationCategory');
@@ -71,7 +71,7 @@ class Update extends Component {
       .catch(err => console.log(err));
     let form_data = new FormData();
     form_data.append('avatar', this.state.files, this.state.files.name);
-    let url = 'http://127.0.0.1:8000/api/uploadFileCategory';
+    let url = 'http://127.0.0.1:8000/api/uploadFileOrganizationCategory';
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'

@@ -168,7 +168,7 @@ class Create extends Component {
                     </FormGroup>
                     <FormGroup row>
                       <Col md="3">
-                        <Label htmlFor="name">Tên chủng loại</Label>
+                        <Label htmlFor="name">Tên Tổ chức</Label>
                       </Col>
                       <Col xs="12" md="9">
                         <Input placeholder="fa fa-home" id="name" name="name"

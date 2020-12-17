@@ -10,6 +10,7 @@ class RegistToBeRescued extends Component {
     this.state = {
       isLoaded: false,
       items: [],
+      cl:[]
     }
   }
 
@@ -30,6 +31,13 @@ class RegistToBeRescued extends Component {
 
   componentDidMount() {
     this.loadItemList();
+    axios.get('/api/speciesCategory').then(res=>{
+      console.log(res.data)
+      this.setState({
+        isLoaded: true,
+        cl:res.data
+      })
+    })
   }
 
 
@@ -56,7 +64,12 @@ class RegistToBeRescued extends Component {
     ).then(this.loadItemList()
     );
   };
-
+  showcat=(id)=>{
+    let data1=this.state.cl.find(value=>value.id = id)
+    return(
+      <td>{data1.name}</td>
+    )
+  }
   render() {
     let {items, isLoaded} = this.state;
     var now=dayjs();
@@ -107,7 +120,7 @@ class RegistToBeRescued extends Component {
                         <td>{item.phone}</td>
                         <td>{item.address}</td>
                         <td>{item.spe_name}</td>
-                        <td>{item.species_category_id}</td>
+                        {this.showcat(item.species_category_id)}
                         <td>{item.description}</td>
                         <td>{item.message}</td>
                         <td>

@@ -73,7 +73,6 @@ class Update extends Component {
     let id = this.props.match.params.id;
     let category = JSON.parse(JSON.stringify(this.state.category));
     category.avatar = create_name(this.state.files.name);
-    console.log(category.avatar);
     axios({
       method: 'put',
       url: 'http://127.0.0.1:8000/api/category/' + id,
